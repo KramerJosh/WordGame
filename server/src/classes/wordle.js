@@ -1,60 +1,34 @@
-const GREEN = "g";
-const YELLOW = "y";
-const BLACK = "b";
+// wordle.js
 
-class Wordle {
-  word;
-  constructor(word) {
-    this.word = word;
+export const checkGuess = (guess, targetWord) => {
+  const feedback = [];
+  const targetArray = targetWord.split("");
+  const guessArray = guess.split("");
+
+  // First pass: check for correct positions (green)
+  for (let i = 0; i < guessArray.length; i++) {
+    if (guessArray[i] === targetArray[i]) {
+      feedback[i] = "green"; // Correct position
+      targetArray[i] = null; // Remove matched letter from target
+    } else {
+      feedback[i] = null; // Placeholder for yellow/gray
+    }
   }
 
-  checkWord(guess) {
-    if (guess.length !== this.word.length) {
-      return [];
+  // Second pass: check for correct letters in the wrong positions (yellow)
+  for (let i = 0; i < guessArray.length; i++) {
+    if (feedback[i] === null && targetArray.includes(guessArray[i])) {
+      feedback[i] = "yellow";
+      targetArray[targetArray.indexOf(guessArray[i])] = null;
     }
-    if (guess === this.word) {
-      return [GREEN, GREEN, GREEN, GREEN, GREEN];
-    }
-    let result = [];
-    for (let i = 0; i < guess.length; i++) {
-      if (guess[i] === this.word[i]) {
-        result.push(GREEN);
-      } else if (this.word.includes(guess[i])) {
-        if (this.repeatedLetterInGuess(guess, i)) {
-          result.push(BLACK);
-        } else {
-          result.push(YELLOW);
-        }
-      } else {
-        result.push(BLACK);
-      }
-    }
-    return result;
   }
-  repeatedLetterInGuess(guess, index) {
-    let charCountInGuess = [];
-    for (let i = 0; i < guess.length; i++) {
-      if (guess[i] === guess[index]) {
-        charCountInGuess.push(i);
-      }
-    }
-    let charCountInWordle = [];
-    for (let i = 0; i < this.word.length; i++) {
-      if (this.word[i] === guess[index]) {
-        charCountInWordle.push(i);
-      }
-    }
-    if (charCountInGuess.length === 1) {
-      return false;
-    }
-    if (charCountInGuess.length === charCountInWordle.length) {
-      return false;
-    }
-    if (index === charCountInGuess[0]) {
-      return false;
-    }
-    return true;
-  }
-}
 
-module.exports = { Wordle, GREEN, YELLOW, BLACK };
+  // Third pass: any remaining letters are incorrect (gray)
+  for (let i = 0; i < guessArray.length; i++) {
+    if (feedback[i] === null) {
+      feedback[i] = "gray";
+    }
+  }
+
+  return feedback;
+};

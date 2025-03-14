@@ -1,20 +1,19 @@
-
-
 const LetterBox = ({ letter, bgCol }) => {
     const boxStyle = {
-        width: "64px",  // Gotta make width and height equal so it's a square
-        height: "64px",
-        display: "flex", // flex and center
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: bgCol, // Background Color should inherit from the same place we're getting the letter.  Green, Yellow, Black.
-        color: "white", // white font will work against all three bg colors
-        fontSize: "24px",
-        fontWeight: "bold",
-        borderRadius: "4px", // rounded corners 
+      width: '40px',
+      height: '40px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      border: '1px solid #ccc',
+      backgroundColor: bgCol,  // Apply the color passed as a prop
+      color: 'white',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
     };
-
+  
     return <div style={boxStyle}>{letter}</div>;
-};
-
-export default LetterBox;
+  };
+  
+  export default LetterBox;
+  
