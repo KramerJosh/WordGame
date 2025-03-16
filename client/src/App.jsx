@@ -2,10 +2,12 @@ import { useState } from "react";
 import LetterRow from "./components/LetterRow";
 import Keyboard from "./components/Keyboard";
 import { getRandomWord } from "../words";
-import { checkGuess } from "../../server/src/classes/wordle"; // Import checkGuess
+// import wordleModule from "./utils/wordle";
+import Wordle, { GREEN, YELLOW, BLACK } from "./utils/wordle";
 
 const App = () => {
   const [targetWord, setTargetWord] = useState(getRandomWord());
+  const [wordle, setWordle] = useState(new Wordle(targetWord)); // Create Wordle instance
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
 
@@ -21,17 +23,27 @@ const App = () => {
 
   const handleSubmit = () => {
     if (currentGuess.length === 5) {
-      const feedback = checkGuess(currentGuess, targetWord); // Get feedback for guess
+      const feedback = wordle.checkWord(currentGuess); // Use Wordle class to check guess
       setGuesses((prev) => [...prev.slice(-3), { guess: currentGuess, feedback }]); // Keep last 4 guesses
       setCurrentGuess("");
     }
   };
 
-  const handleNewGame = () => {
-    setTargetWord(getRandomWord());
+  const handleNewGame = async () => {
+    try {
+        const response = await fetch("http://localhost:5000/random-word");
+        const data = await response.json();
+        console.log("Target Word received from server:", data.word); // Log the word received
+        setTargetWord(data.word); // Set the random word received from server
+    } catch (error) {
+        console.error("Error fetching random word:", error);
+    }
+
+    // Reset guesses or any other state related to a new game
     setGuesses([]);
     setCurrentGuess("");
-  };
+};
+
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>

@@ -1,18 +1,36 @@
+// LetterBox takes letter and bgCol as props
+// LetterRow is going to pass both
+
 const LetterBox = ({ letter, bgCol }) => {
-    const boxStyle = {
-      width: '40px',
-      height: '40px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      border: '1px solid #ccc',
-      backgroundColor: bgCol,  // Apply the color passed as a prop
-      color: 'white',
-      fontWeight: 'bold',
-      textTransform: 'uppercase',
-    };
-  
-    return <div style={boxStyle}>{letter}</div>;
+    let newBgCol = "lightblue"
+    if (bgCol === "b") {
+        newBgCol = "black"
+    } else if (bgCol === "g") {
+        newBgCol = "green"
+    } else if (bgCol === "y") {
+        newBgCol = "yellow"
+    } else {
+        newBgCol = "lightblue"
+    }
+    
+
+    return (
+      <div
+        style={{
+            color: "white",
+          width: "40px",
+          height: "40px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: newBgCol,
+          border: "1px solid black",
+          fontWeight: "bold",
+        }}
+      >
+        {letter}
+      </div>
+    );
   };
   
   export default LetterBox;
