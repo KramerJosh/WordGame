@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LetterRow from "./components/LetterRow";
 import Keyboard from "./components/Keyboard";
-import { getRandomWord } from "../words";
-// import wordleModule from "./utils/wordle";
+import { getRandomWord } from "../words"; // Import the getRandomWord function
 import Wordle, { GREEN, YELLOW, BLACK } from "./utils/wordle";
 
 const App = () => {
-  const [targetWord, setTargetWord] = useState(getRandomWord());
-  const [wordle, setWordle] = useState(new Wordle(targetWord)); // Create Wordle instance
+  const [targetWord, setTargetWord] = useState(null);
+  const [wordle, setWordle] = useState(null);
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState("");
+
+  // Fetch word from server once on mount
+  useEffect(() => {
+    const fetchWord = async () => {
+      const word = await getRandomWord(); // Fetch the random word from words.js
+      if (word) {
+        setTargetWord(word);
+        setWordle(new Wordle(word)); // Create a new Wordle instance
+        console.log(word)
+      }
+    };
+
+    fetchWord(); // Fetch word when the component mounts
+  }, []); // Empty dependency array ensures this only runs once
 
   const handleLetterClick = (letter) => {
     if (currentGuess.length < 5) {
@@ -22,7 +35,7 @@ const App = () => {
   };
 
   const handleSubmit = () => {
-    if (currentGuess.length === 5) {
+    if (currentGuess.length === 5 && wordle) {
       const feedback = wordle.checkWord(currentGuess); // Use Wordle class to check guess
       setGuesses((prev) => [...prev.slice(-3), { guess: currentGuess, feedback }]); // Keep last 4 guesses
       setCurrentGuess("");
@@ -31,19 +44,18 @@ const App = () => {
 
   const handleNewGame = async () => {
     try {
-        const response = await fetch("http://localhost:5000/random-word");
-        const data = await response.json();
-        console.log("Target Word received from server:", data.word); // Log the word received
-        setTargetWord(data.word); // Set the random word received from server
+      const word = await getRandomWord(); // Get a new word from the GitHub list
+      if (word) {
+        setTargetWord(word);
+        setWordle(new Wordle(word)); // Create a new Wordle instance
+        console.log(word)
+        setGuesses([]); // Reset guesses
+        setCurrentGuess(""); // Reset current guess
+      }
     } catch (error) {
-        console.error("Error fetching random word:", error);
+      console.error("Failed to start a new game:", error);
     }
-
-    // Reset guesses or any other state related to a new game
-    setGuesses([]);
-    setCurrentGuess("");
-};
-
+  };
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
