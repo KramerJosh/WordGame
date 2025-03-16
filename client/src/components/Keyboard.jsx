@@ -7,6 +7,7 @@ const Keyboard = ({
   onSubmit,
   usedLetters,
   otherButtons,
+  gameover,
 }) => {
   const rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
@@ -23,10 +24,10 @@ const Keyboard = ({
                 padding: "10px",
                 fontSize: "16px",
                 // if a letter has been used, once the submit button is pressed we disable that button until a new game starts
-                cursor: usedLetters.has(letter) ? "not-allowed" : "pointer", 
-                backgroundColor: usedLetters.has(letter) ? "lightgray" : "",
+                cursor: (usedLetters.has(letter) || gameover === true) ? "not-allowed" : "pointer", 
+                backgroundColor: (usedLetters.has(letter) || gameover === true) ? "lightgray" : "",
               }}
-              disabled={usedLetters.has(letter)}
+              disabled={usedLetters.has(letter) || gameover === true}
             >
               {letter}
             </button>
