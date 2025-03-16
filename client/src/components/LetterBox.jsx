@@ -3,12 +3,16 @@
 
 const LetterBox = ({ letter, bgCol }) => {
     let newBgCol = "lightblue"
+    let newFontCol = "black"
     if (bgCol === "b") {
         newBgCol = "black"
+        newFontCol = "white"
     } else if (bgCol === "g") {
         newBgCol = "green"
+        newFontCol = "white"
     } else if (bgCol === "y") {
         newBgCol = "yellow"
+        newFontCol = "black"
     } else {
         newBgCol = "lightblue"
     }
@@ -17,7 +21,7 @@ const LetterBox = ({ letter, bgCol }) => {
     return (
       <div
         style={{
-            color: "white",
+            color: newFontCol,
           width: "40px",
           height: "40px",
           display: "flex",
