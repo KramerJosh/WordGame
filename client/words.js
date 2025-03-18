@@ -1,21 +1,30 @@
 // ok so this is the first file to look at on the client side.
 
+// I should probably take the call from the server and put it here
 
-// this is where we'll make the request to our server for a word.
-// check out the vite config for details on how this is allowed
+
+
+const GITHUB_WORDS_URL = "https://raw.githubusercontent.com/axlrommel/wordle/main/fiveLetterWords.js";
+
 export const getRandomWord = async () => {
   try {
-    const response = await fetch("/random-word"); 
-    const data = await response.json();
+    const response = await fetch(GITHUB_WORDS_URL);
+    const text = await response.text(); // Get raw text from the file
 
-    // Clean up the word: remove quotes, commas, or any unwanted characters
-    // trim gets rid of whitespace
-    let word = data.word.trim(); 
-    // regex used here to say: if you see a single or double quote, or a comma, no you didn't
-    return word = word.replace(/['",]/g, '');
+    // Split into an array and clean up the words
+    const wordList = text.split("\n").map((word) => word.trim());
+
+    // Pick a random word
+    const randomIndex = Math.floor(Math.random() * wordList.length);
+    let word = wordList[randomIndex];
+
+    // Clean up any unwanted characters (quotes, commas, etc.)
+    word = word.replace(/['",]/g, "");
+
+    console.log("Selected word:", word); 
+    return word;
   } catch (error) {
-    console.error("Error fetching random word:", error);
-    return "error"; // Handle any errors gracefully
+    console.error("Error fetching words from GitHub:", error);
+    return "error"; 
   }
 };
-
