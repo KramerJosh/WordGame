@@ -1,3 +1,6 @@
+// this component is our keyboard
+
+// it takes 5 props so far, all come in from app.jsx
 const Keyboard = ({
   onLetterClick,
   onDelete,
@@ -9,20 +12,9 @@ const Keyboard = ({
   const rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
   return (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: "20px",
-        position: "fixed", /* Anchor to the bottom */
-        bottom: "0", /* Stick to the bottom of the screen */
-        width: "100%", /* Full width */
-        backgroundColor: "#333",
-        padding: "10px",
-        boxSizing: "border-box",
-      }}
-    >
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} style={{ margin: "5px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <div key={rowIndex} style={{ margin: "5px" }}>
           {row.split("").map((letter) => (
             <button
               key={letter}
@@ -31,12 +23,9 @@ const Keyboard = ({
                 margin: "5px",
                 padding: "10px",
                 fontSize: "16px",
-                cursor: usedLetters.has(letter) || gameover === true ? "not-allowed" : "pointer",
-                backgroundColor: usedLetters.has(letter) || gameover === true ? "lightgray" : "",
-                flex: "1 0 18%", /* Adjusts to 5 keys per row */
-                minWidth: "50px", /* Prevent keys from getting too small */
-                textAlign: "center",
-                borderRadius: "5px",
+                // if a letter has been used, once the submit button is pressed we disable that button until a new game starts
+                cursor: (usedLetters.has(letter) || gameover === true) ? "not-allowed" : "pointer", 
+                backgroundColor: (usedLetters.has(letter) || gameover === true) ? "lightgray" : "",
               }}
               disabled={usedLetters.has(letter) || gameover === true}
             >
@@ -45,14 +34,13 @@ const Keyboard = ({
           ))}
         </div>
       ))}
-      <div style={{ marginTop: "10px", display: "flex", justifyContent: "center", gap: "10px" }}>
+      <div style={{ marginTop: "10px" }}>
         <button
           onClick={onDelete}
           style={{
             margin: "5px",
             padding: "10px",
             cursor: otherButtons === "disable" ? "not-allowed" : "pointer",
-            minWidth: "80px", /* Ensure buttons are wide enough */
           }}
           disabled={otherButtons === "disable"}
         >
@@ -60,11 +48,7 @@ const Keyboard = ({
         </button>
         <button
           onClick={onSubmit}
-          style={{
-            margin: "5px",
-            padding: "10px",
-            cursor: otherButtons === "disable" ? "not-allowed" : "pointer",
-            minWidth: "80px", /* Ensure buttons are wide enough */
+          style={{ margin: "5px", padding: "10px", cursor: otherButtons === "disable" ? "not-allowed" : "pointer",
           }}
           disabled={otherButtons === "disable"}
         >
