@@ -8,7 +8,7 @@ const LetterRow = ({ wordArray, colorArray }) => {
   const rowStyle = {
     display: "flex",
     gap: "8px",
-    padding: "16px",
+    padding: "2px",
   };
 
   return (

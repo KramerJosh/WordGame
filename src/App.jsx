@@ -109,7 +109,7 @@ const App = () => {
     // if there were already 4 previous guesses, and the 5th guess isn't the wordle, set game state to "game over", disable the other buttons, and change header to include the wordle.
     if (guesses.length === 4 && currentGuess !== wordle.word) {
       setOtherButtons("disable");
-      setGameHeader(`Game Over. Word was ${wordle.word}.`);
+      setGameHeader(`game over. word was ${wordle.word}.`);
       setGameOver(true);
     }
   };
