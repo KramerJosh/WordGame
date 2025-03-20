@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1 {
+  font-size: 24px;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -73,7 +77,7 @@ body {
   font-weight: bold;
   text-align: center;
   background-color: #444; /* A slightly different color for the current guess */
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
   width: 100%; /* To ensure it doesn't overflow */
 }
@@ -81,7 +85,7 @@ body {
 /* ✅ New Game Button - Permanently above the keyboard */
 #new-game-container {
   position: fixed;
-  bottom: 180px; /* Moved up */
+  bottom: 210px; /* Moved up */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -127,11 +131,38 @@ body {
 }
 
 .keyboard-button {
-  padding: 5px 8px;
-  font-size: 12px;
-  margin: 2px;
-  min-width: 24px;
+  all: unset; /* Removes all browser-specific button styles */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Set a fixed width */
+  height: 50px; /* Set a fixed height */
+  font-size: 18px; /* Standardize font size */
+  background-color: #333;
+  color: white;
+  border-radius: 5px; /* Ensure rounded corners are the same */
+  border: 2px solid #444; /* Define explicit border */
+  cursor: pointer;
+  user-select: none; /* Prevent accidental text selection */
+  font-family: inherit; /* Ensure consistent font */
 }
+
+.keyboard-button:active {
+  background-color: #555;
+  transform: scale(0.95); /* Gives a slight click effect */
+}
+
+input,
+button,
+textarea {
+  -webkit-appearance: none; /* Removes iOS default styling */
+  appearance: none;
+}
+
+.keyboard-button:focus {
+  outline: none;
+}
+
 
 /* ✅ Adjust Submit and Delete Buttons */
 .keyboard-controls button {
@@ -189,5 +220,11 @@ body {
 
   .current-guess-container {
     font-size: 1.3rem;
+  }
+
+  .keyboard-button {
+    width: 35px;
+    height: 45px;
+    font-size: 16px;
   }
 
