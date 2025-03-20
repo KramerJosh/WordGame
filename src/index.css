@@ -54,20 +54,14 @@ body {
 /* ✅ Static-size container for guesses and current guess */
 #guesses-container {
   width: 100%;
-  max-height: 375px; /* Set height to fit 5 guesses */
-  overflow: hidden; /* Hide scrollbars if content exceeds */
+  max-height: 375px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #333; /* To visually separate the container */
-  border-radius: 10px; /* Slight rounding for aesthetics */
-  margin-top: 0; /* No margin to ensure alignment */
-  overflow-y: auto; /* Allows scrolling only if there are more than 5 guesses */
-  scrollbar-width: none; /* Firefox-specific */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  padding: 5px; /* Reduce padding */
+  gap: 4px; /* Adjust spacing between guess rows */
 }
 
 /* ✅ Current Guess inside static box */
@@ -85,7 +79,7 @@ body {
 /* ✅ New Game Button - Permanently above the keyboard */
 #new-game-container {
   position: fixed;
-  bottom: 210px; /* Moved up */
+  bottom: 240px; /* Moved up */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -199,6 +193,21 @@ textarea {
   cursor: pointer;
 }
 
+.letter-box {
+  width: 40px; /* Reduce width */
+  height: 45px; /* Reduce height */
+  font-size: 20px; /* Adjust font size accordingly */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #444;
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
 
 /* ✅ Mobile Responsiveness */
 @media (max-width: 500px) {
@@ -210,9 +219,9 @@ textarea {
     padding-bottom: 150px; /* More space for mobile devices */
   }
 
-  /* #new-game-container {
-    bottom: 120px; /* Extra space for mobile */
-  } */
+   /* #new-game-container { */
+    /* bottom: 120px; Extra space for mobile */
+/* } */
 
   #keyboard-container {
     margin-bottom: 0; /* Removed for consistency */
@@ -228,3 +237,10 @@ textarea {
     font-size: 16px;
   }
 
+  .letter-box {
+    width: 35px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+}
