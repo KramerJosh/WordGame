@@ -1,7 +1,9 @@
 // LetterBox takes letter and bgCol as props
 // LetterRow is going to pass both
 
+
 const LetterBox = ({ letter, bgCol }) => {
+  // takes the feedback bgCol and uses it to sest the color of the letter boxes
     let newBgCol = "lightblue"
     let newFontCol = "black"
     if (bgCol === "b") {
