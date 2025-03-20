@@ -25,44 +25,140 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: flex-start; /* Align items at the top */
+  align-items: center; /* Center elements vertically */
   min-width: 320px;
   min-height: 100vh;
+  text-align: center;
+  flex-direction: column;
+  overflow: hidden; /* Prevent scrollbars on the body */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* =============== GAME LAYOUT =============== */
+#app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align everything at the top */
+  width: 100%;
+  text-align: center;
+  padding-bottom: 180px; /* Space for New Game button & Keyboard */
+  height: 100vh; /* Ensure it takes full height */
+  overflow: hidden; /* Prevent scrollbars inside the app container */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* ✅ Static-size container for guesses and current guess */
+#guesses-container {
+  width: 100%;
+  max-height: 375px; /* Set height to fit 5 guesses */
+  overflow: hidden; /* Hide scrollbars if content exceeds */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #333; /* To visually separate the container */
+  border-radius: 10px; /* Slight rounding for aesthetics */
+  margin-top: 0; /* No margin to ensure alignment */
+  overflow-y: auto; /* Allows scrolling only if there are more than 5 guesses */
+  scrollbar-width: none; /* Firefox-specific */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+/* ✅ Current Guess inside static box */
+.current-guess-container {
+  margin-top: 10px; /* Reduce top margin to bring it closer */
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: #444; /* A slightly different color for the current guess */
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%; /* To ensure it doesn't overflow */
+}
+
+/* ✅ New Game Button - Permanently above the keyboard */
+#new-game-container {
+  position: fixed;
+  bottom: 150px; /* Positioned above the keyboard */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #242424;
+  padding: 10px 0;
+  z-index: 2;
+}
+
+#new-game-button {
+  padding: 10px 20px;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
+/* Keyboard - Fixed at Bottom */
+#keyboard-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: #242424;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0; /* Remove margin here as it's not needed anymore */
+}
+
+/* ✅ Keyboard Styling */
+.keyboard-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+.keyboard-button {
+  padding: 5px 8px;
+  font-size: 12px;
+  margin: 2px;
+  min-width: 24px;
+}
+
+/* ✅ Adjust Submit and Delete Buttons */
+.keyboard-controls button {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* ✅ Mobile Responsiveness */
+@media (max-width: 500px) {
   button {
-    background-color: #f9f9f9;
+    font-size: 14px;
+    padding: 8px;
+  }
+  #app-container {
+    padding-bottom: 150px; /* More space for mobile devices */
+  }
+
+  /* #new-game-container {
+    bottom: 120px; /* Extra space for mobile */
+  } */
+
+  #keyboard-container {
+    margin-bottom: 0; /* Removed for consistency */
+  }
+
+  .current-guess-container {
+    font-size: 1.3rem;
   }
 }

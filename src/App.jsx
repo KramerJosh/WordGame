@@ -137,22 +137,20 @@ const App = () => {
     }
   };
 
-  return (
-    <div
-      style={{
-        textAlign: "center",
-        padding: "20px",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        justifyContent: "width",
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
-      <h1>{gameHeader}</h1>
+return (
+  <div id="app-container">
+    <h1>{gameHeader}</h1>
 
-      {/* Show last 4 guesses with color feedback */}
+    {/* ✅ Fixed current guess at the top */}
+    <div id="current-guess-container">
+      <LetterRow
+        wordArray={currentGuess.split("")}
+        colorArray={Array(5).fill("lightblue")}
+      />
+    </div>
+
+    {/* ✅ Below current guess: past guesses */}
+    <div id="guesses-container">
       {guesses.map((entry, index) => (
         <LetterRow
           key={index}
@@ -160,14 +158,17 @@ const App = () => {
           colorArray={entry.feedback}
         />
       ))}
+    </div>
 
-      {/* Show current guess */}
-      <LetterRow
-        wordArray={currentGuess.split("")}
-        colorArray={Array(5).fill("lightblue")}
-      />
+    {/* New Game Button */}
+    <div id="new-game-container">
+      <button onClick={handleNewGame} className="new-game-button">
+        New Game
+      </button>
+    </div>
 
-      {/* Keyboard */}
+    {/* Keyboard */}
+    <div id="keyboard-container">
       <Keyboard
         onLetterClick={handleLetterClick}
         onDelete={handleDelete}
@@ -176,16 +177,11 @@ const App = () => {
         otherButtons={otherButtons}
         gameover={gameOver}
       />
-
-      {/* New Game Button */}
-      <button
-        onClick={handleNewGame}
-        style={{ marginTop: "20px", padding: "10px" }}
-      >
-        New Game
-      </button>
     </div>
-  );
+  </div>
+);
+
+  
 };
 
 export default App;

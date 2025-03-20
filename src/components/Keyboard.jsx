@@ -1,6 +1,3 @@
-// this component is our keyboard
-
-// it takes 5 props so far, all come in from app.jsx
 const Keyboard = ({
   onLetterClick,
   onDelete,
@@ -12,44 +9,34 @@ const Keyboard = ({
   const rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
+    <div className="keyboard-container">
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} style={{ margin: "5px" }}>
+        <div key={rowIndex} className="keyboard-row">
           {row.split("").map((letter) => (
             <button
               key={letter}
               onClick={() => onLetterClick(letter)}
+              className="keyboard-button"
               style={{
-                margin: "5px",
-                padding: "10px",
-                fontSize: "16px",
-                // if a letter has been used, once the submit button is pressed we disable that button until a new game starts
-                cursor: (usedLetters.has(letter) || gameover === true) ? "not-allowed" : "pointer", 
-                backgroundColor: (usedLetters.has(letter) || gameover === true) ? "lightgray" : "",
+                cursor: usedLetters.has(letter) || gameover ? "not-allowed" : "pointer",
+                backgroundColor: usedLetters.has(letter) || gameover ? "lightgray" : "",
               }}
-              disabled={usedLetters.has(letter) || gameover === true}
+              disabled={usedLetters.has(letter) || gameover}
             >
               {letter}
             </button>
           ))}
         </div>
       ))}
-      <div style={{ marginTop: "10px" }}>
+      <div className="keyboard-controls">
         <button
           onClick={onDelete}
-          style={{
-            margin: "5px",
-            padding: "10px",
-            cursor: otherButtons === "disable" ? "not-allowed" : "pointer",
-          }}
           disabled={otherButtons === "disable"}
         >
           Delete
         </button>
         <button
           onClick={onSubmit}
-          style={{ margin: "5px", padding: "10px", cursor: otherButtons === "disable" ? "not-allowed" : "pointer",
-          }}
           disabled={otherButtons === "disable"}
         >
           Submit
